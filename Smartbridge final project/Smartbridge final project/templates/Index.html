@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bird Species Classification</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <style>
+        .resized-image {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 align="center">Upload a Bird Image</h1>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                {% if filename %}
+                <div class="card" style="width: 40rem;">
+                    <img class="card-img-top resized-image" src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Bird Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ y_pred }}</h5>
+                        <a href="https://www.google.com/search?q={{ y_pred }}&tbm=isch" target="_blank" class="btn btn-primary">More Info</a>
+                    </div>
+                </div>
+                {% endif %}
+
+                <form method="post" action="/" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="file-upload">Select an image to upload</label>
+                        <input type="file" name="file" id="file-upload" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-info">Submit</button>
+                </form>
+
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
